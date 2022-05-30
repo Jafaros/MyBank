@@ -1,0 +1,8 @@
+C:\Users\grajc\source\repos\MyBank\MyBank\bin\Debug\MyBank.exe.config
+C:\Users\grajc\source\repos\MyBank\MyBank\bin\Debug\MyBank.exe
+C:\Users\grajc\source\repos\MyBank\MyBank\bin\Debug\MyBank.pdb
+C:\Users\grajc\source\repos\MyBank\MyBank\obj\Debug\MyBank.csproj.AssemblyReference.cache
+C:\Users\grajc\source\repos\MyBank\MyBank\obj\Debug\MyBank.csproj.SuggestedBindingRedirects.cache
+C:\Users\grajc\source\repos\MyBank\MyBank\obj\Debug\MyBank.csproj.CoreCompileInputs.cache
+C:\Users\grajc\source\repos\MyBank\MyBank\obj\Debug\MyBank.exe
+C:\Users\grajc\source\repos\MyBank\MyBank\obj\Debug\MyBank.pdb
