@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBank
 {
+    //Zde jsou všechny dostupné příkazy pro administrátory
     class Commands
     {
         public static void SetMoney(int accountId, int bankId, int count)

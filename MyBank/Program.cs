@@ -1,10 +1,7 @@
-﻿//Petr Grajciar, 3.B, 29. 5. 2022, PVA, MyBank
+﻿//Petr Grajciar, 3.B, 31. 5. 2022, PVA, MyBank
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBank
 {
@@ -12,6 +9,7 @@ namespace MyBank
     {
         public static bool adminLogged = false;
         public static List<Account> accounts = new List<Account>();
+        public static Account loggedAccount;
 
         static void Main(string[] args)
         {       
@@ -26,6 +24,7 @@ namespace MyBank
 
             while (stav)
             {
+                //Přihlašovací sekce
                 Console.Write("\nZadejte sve uzivatelske jmeno: ");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 name = Console.ReadLine();
@@ -36,19 +35,23 @@ namespace MyBank
                 password = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
 
+                //Kontrola přihlašovacích údajů, zda se nepřihlašujete jako admin
                 if (name == Admin.name && password == Admin.password)
                 {
                     adminLogged = true;
 
                     while (adminLogged)
                     {
+                        //Načtení příkazu
                         Console.Write("\nPrikaz(help): ");
                         Console.ForegroundColor = ConsoleColor.Green;
                         string cmd = Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.White;
 
+                        //Příkazy pro administrátory
                         switch (cmd)
                         {
+                            //Nastaví peněžní částku zadanému účtu
                             case "set":
                                 Console.Write("Cislo uctu, na ktery chcete penize nastavit: ");
                                 int accountId = int.Parse(Console.ReadLine());
@@ -61,26 +64,30 @@ namespace MyBank
 
                                 break;
 
+                            //Získá informace o zadaném účtu
                             case "get":
                                 Console.Write("Jmeno uctu: ");
                                 string searchAccountName = Console.ReadLine();
 
                                 Commands.GetAccount(searchAccountName);
-
                                 break;
 
+                            //Vytvoří nový účet v bance
                             case "create":
                                 Commands.CreateAccount();
                                 break;
 
+                            //Příkaz, který zobrazí nápovědu
                             case "help":
                                 Commands.Help();
                                 break;
-
+                            
+                            //Příkaz, který odhlásí admina
                             case "exit":
                                 Commands.LogOut();
                                 break;
 
+                            //Hláška, která se spustí když zadaný příkaz neexistuje
                             default:
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Zadany prikaz neexistuje.");
@@ -88,16 +95,16 @@ namespace MyBank
                                 break;
                         }
                     }
-                }
+                }              
                 else 
                 {
                     foreach (var account in accounts)
                     {
+                        //Kontrola zda se uživatel přihlásil jako klient
                         if (name == account.name && password == account.password)
                         {
-                            string loggedName = account.name;
-                            int id = account.id;
-
+                            //Přiřazení dat o přihlášeném uživateli do třídy
+                            loggedAccount = account;
                             logged = true;
                             Console.WriteLine("\nByl/a jste uspesne prihlasen! Vitejte {0}\n", account.fullName);
 
@@ -110,7 +117,9 @@ namespace MyBank
 
                                 int option = int.Parse(Console.ReadLine());
 
+                                //Switch s dovolenými příkazy pro uživatele
                                 switch (option) {
+                                    //Poslání peněz na zadaný účet
                                     case 1:
                                         Console.Write("\nZadejte cislo uctu, na ktery maji byt penize poslany: ");
                                         int accountId = int.Parse(Console.ReadLine());
@@ -119,38 +128,36 @@ namespace MyBank
                                         Console.Write("Zadejte castku: ");
                                         int amount = int.Parse(Console.ReadLine());
 
-                                        Console.WriteLine("\n" + UserCommands.SendMoney(accountId, bankId, amount, id) + "\n");
+                                        Console.WriteLine("\n" + UserCommands.SendMoney(accountId, bankId, amount, loggedAccount.id, loggedAccount.bankId) + "\n");
                                         break;
 
+                                    //Získání informací o vlastním účtu
                                     case 2:
-                                        UserCommands.GetAccountInfo(loggedName);
+                                        UserCommands.GetAccountInfo(loggedAccount.name);
                                         break;
 
+                                    //Výpis všech transakcí
                                     case 3:
-                                        foreach (var loggedAccount in accounts)
+                                        foreach (var transaction in loggedAccount.transactionHistory)
                                         {
-                                            if (loggedAccount.name == loggedName)
+                                            if (transaction.Name == "Platba prijata")
                                             {
-                                                foreach (var action in accounts)
-                                                {
-                                                    if(action.transactionHistory.Count > 0)
-                                                    {
-                                                        foreach (var transaction in action.transactionHistory)
-                                                        {
-                                                            Console.ForegroundColor = ConsoleColor.Cyan;
-                                                            Console.WriteLine("\n" + transaction + "\n");
-                                                            Console.ForegroundColor = ConsoleColor.White;
-                                                        }
-                                                    }
-                                                }
+                                                Console.ForegroundColor = ConsoleColor.Green;
                                             }
+
+                                            if (transaction.Name == "Platba odeslana")
+                                            {
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                            }
+
+                                            Console.WriteLine(transaction.ToString());
+                                            Console.ForegroundColor = ConsoleColor.White;
                                         }
                                         break;
 
+                                    //Odhlásí uživatele
                                     case 4:
                                         logged = false;
-                                        id = 0;
-                                        loggedName = String.Empty;
                                         break;
 
                                     default:

@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBank
 {
+    //Zde jsou všechny příkazy pro běžné uživatele
     class UserCommands
     {
-        public static string SendMoney(int id, int bankId, int amount, int senderId) 
+        public static string SendMoney(int id, int bankId, int amount, int senderId, int senderBankId) 
         {
             foreach (var receiver in Program.accounts)
             {
                 if (receiver.id == id && receiver.bankId == bankId)
                 { 
                     receiver.money += amount;
+
+                    receiver.transactionHistory.Add(new Transaction() { Id = receiver.transactionCount++, Name = "Platba prijata", Amount = amount, Sender = senderId.ToString(), SenderBankId = senderBankId, Receiver = id.ToString() });
                 }
             }
 
@@ -24,7 +23,7 @@ namespace MyBank
                 {
                     sender.money -= amount;
 
-                    sender.transactionHistory.Add(" Transakce cislo: " + 0001 + "\n Na ucet: " + id + "\n Kod banky: " + bankId + "\n Castka: " + amount + " CZK");
+                    sender.transactionHistory.Add(new Transaction() { Id = sender.transactionCount++, Name = "Platba odeslana", Receiver = id.ToString(), Amount = amount, ReceiverBankId = bankId, Sender = senderId.ToString()});
 
                     return "Platba byla uspesne provedena";
                 }
