@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyBank
+﻿namespace MyBank
 {
     //Kontruktor pro transakci
     public class Transaction
