@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MyBank
 {
-    //Konstruktor pro vytvoření běžného účtu
+    //Objekt vytvoření účtu a práci s účtem
     public class Account
     {
         // Proměnné mají modifikátor přístupu private, což znamená že jsou přístupny pouze ,,zevnitř" této třídy

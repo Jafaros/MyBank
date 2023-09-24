@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyBank
 {
+    // Třída Admin se statickými daty
     class Admin
     {
         public static int id = 0;

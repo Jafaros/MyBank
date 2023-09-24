@@ -1,6 +1,6 @@
 ﻿namespace MyBank
 {
-    //Kontruktor pro transakci
+    //Objekt pro vytvoření transakce
     public class Transaction
     {
         public int Id { get; set; }
@@ -14,7 +14,7 @@
         //Přepíše funkci ToString() do vlastního tvaru
         public override string ToString()
         {
-            return $"\n Jmeno: {Name}\n Cislo transakce: {Id}\n Prijemce: {Receiver}\n Odesilatel: {Sender}\n Castka: {Amount}\n";
+            return $"\n Jmeno: {Name}\n Cislo transakce: {Id}\n Prijemce: {Receiver}\n Odesilatel: {Sender}\n Castka: {Amount} Kc\n ";
         }
     }
 }
